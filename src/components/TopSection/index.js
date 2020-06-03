@@ -1,12 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ShowsDropMenu from './ShowsDropMenu'
 
-export default (allShows, isShowsVisible, hideShows) => {
+export default ({ allShows, togleShows, showSelectedShowEpisodes, selectedShow, isShowsVisible }) => {
     return (
         <>
             <div className="search-wrapper">
                 <label htmlFor="selectShow" className="searchBarStyle"> Select a Show: </label>
-                <ShowsDropMenu allShows={allShows} />
+                <ShowsDropMenu
+                    allShows={allShows}
+                    showSelectedShowEpisodes={showSelectedShowEpisodes}
+                    selectedShow={selectedShow}
+                />
                 <label htmlFor="selectBox" className="searchBarStyle"> Select an Episode: </label>
                 <div id="selectBox" > </div>
             </div>
@@ -15,7 +19,7 @@ export default (allShows, isShowsVisible, hideShows) => {
                 <input id="searchBox" name="search" />
 
                 <label className="anotherSearchBarStyle"> Current Show : </label>
-                <label id="showTitle" className="anotherStyle2"> All Shows </label>
+                <label id="showTitle" className="anotherStyle2"> {selectedShow.length > 0 ? selectedShow[0].name : 'All Shows'} </label>
 
             </div>
 
@@ -31,8 +35,8 @@ export default (allShows, isShowsVisible, hideShows) => {
                     <option value="rating-">Rating (top first)</option>
                 </select>
 
-                <button id="goBack" style={{ marginLeft: "30%" }} className="btn-show1"> Back To All Shows </button>
-                <button className="btn-show1" onClick={() => { hideShows(isShowsVisible = !isShowsVisible) }}> Hide Shows </button>
+                <button id="goBack" onClick={() => { showSelectedShowEpisodes('All Shows'); if (!isShowsVisible) { togleShows() }; }} className="btn-show1 margin1in100"> Back To All Shows </button>
+                <button className="btn-show1 margin1in100" onClick={(e) => { togleShows(); }}> {isShowsVisible ? 'Hide Shows' : 'Show Shows'} </button>
             </div>
         </>
     )

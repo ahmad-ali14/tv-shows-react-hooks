@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '../App.css'
 
 
-export default ({ shows, isShowsVisible }) => {
-    const selectedShow = useState(0);
+export default ({ shows, isShowsVisible, selectedShow }) => {
 
 
     const makeTitle = (s) => {
@@ -19,7 +18,7 @@ export default ({ shows, isShowsVisible }) => {
 
     return (
         <>
-            {isShowsVisible ? <MakePageForShows shows={shows} makeTitle={makeTitle} /> : <p>No shows</p>}
+            {isShowsVisible ? <MakePageForShows shows={shows} makeTitle={makeTitle} /> : <MakePageForShows shows={selectedShow} makeTitle={makeTitle} />}
         </>
     )
 
