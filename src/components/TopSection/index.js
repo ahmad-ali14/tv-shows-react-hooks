@@ -10,6 +10,7 @@ export default ({ allShows, togleShows, showSelectedShowEpisodes, selectedShow, 
                     allShows={allShows}
                     showSelectedShowEpisodes={showSelectedShowEpisodes}
                     selectedShow={selectedShow}
+                    isShowsVisible={isShowsVisible}
                 />
                 <label htmlFor="selectBox" className="searchBarStyle"> Select an Episode: </label>
                 <div id="selectBox" > </div>
@@ -35,7 +36,7 @@ export default ({ allShows, togleShows, showSelectedShowEpisodes, selectedShow, 
                     <option value="rating-">Rating (top first)</option>
                 </select>
 
-                <button id="goBack" onClick={() => { showSelectedShowEpisodes('All Shows'); if (!isShowsVisible) { togleShows() }; }} className="btn-show1 margin1in100"> Back To All Shows </button>
+                <button id="goBack" onClick={() => { if (!isShowsVisible) { togleShows() }; showSelectedShowEpisodes('All Shows'); }} className="btn-show1 margin1in100"> Back To All Shows </button>
                 <button className="btn-show1 margin1in100" onClick={(e) => { togleShows(); }}> {isShowsVisible ? 'Hide Shows' : 'Show Shows'} </button>
             </div>
         </>
