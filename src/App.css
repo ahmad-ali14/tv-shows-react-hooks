@@ -20,12 +20,12 @@
   text-align: center;
 }
 
-.third > p {
+.third>p {
   text-align: justify;
   padding: 5%;
 }
 
-.third > p.lasttext {
+.third>p.lasttext {
   text-align: center;
   padding: 0 auto;
   margin: -20px 0;
@@ -36,7 +36,7 @@
   border-radius: 5%;
   padding: 3%;
   font-weight: bolder;
-  font-size: large;
+  font-size: medium;
 }
 
 .search-wrapper {
@@ -118,6 +118,7 @@
 .container {
   overflow: hidden;
 }
+
 .column {
   float: left;
   margin: 20px;
@@ -127,7 +128,9 @@
 }
 
 .limited {
-  height: 200px;
+  min-height: 200px;
+  /* height: 200px; */
+  max-height: 200px;
   overflow: hidden;
   border: 1px solid rgba(f, 0, 0, 0.2);
   /* text-overflow: ellipsis; */

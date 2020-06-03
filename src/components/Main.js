@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import '../App.css'
 
 
-export default ({ shows, isShowsVisible, selectedShow, episodes }) => {
+export default ({ shows, isShowsVisible, selectedShow, episodes, fetchEpisodes }) => {
 
 
     const makeTitle = (s) => {
-        return ` ${s.name} - S${s.season < 9 ? '0' + s.season : s.season}E${s.number < 9 ? '0' + s.number : s.number}`;
+        return `${s.name.length > 25 ? s.name.substring(0, 25) : s.name} - S${s.season < 9 ? '0' + s.season : s.season}E${s.number < 9 ? '0' + s.number : s.number}`;
 
     }
 
@@ -18,7 +18,7 @@ export default ({ shows, isShowsVisible, selectedShow, episodes }) => {
 
     return (
         <>
-            {isShowsVisible ? <MakePageForShows shows={shows} makeTitle={makeTitle} /> : <MakePageForShows shows={episodes} makeTitle={makeTitle} />}
+            {isShowsVisible ? <MakePageForShows shows={shows} fetchEpisodes={fetchEpisodes} makeTitle={makeTitle} /> : <MakePageForEpisodes shows={episodes} makeTitle={makeTitle} />}
         </>
     )
 
@@ -26,31 +26,62 @@ export default ({ shows, isShowsVisible, selectedShow, episodes }) => {
 }
 
 
-const MakePageForShows = ({ shows, makeTitle }) => {
+const MakePageForShows = ({ shows, fetchEpisodes }) => {
 
     return (
         <>
-            {shows.map((showNow) => { return (<Singliton key={showNow.id} show={showNow} />) })}
+            {shows.map((showNow) => { return (<Singliton key={showNow.id} show={showNow} fetchEpisodes={fetchEpisodes} />) })}
         </>
     )
 }
 
 
 
-const Singliton = ({ show }) => {
+const Singliton = ({ show, fetchEpisodes }) => {
 
     return (
         <div className="third">
             <h4 className="epi-title" id={show.id}>  {show.name} </h4>
-            <img src={show.image.medium} alt={show.name} />
+            <img src={show.image ? show.image.medium ? show.image.medium : show.image.original ? show.image.original : '' : ''} alt={show.name} />
             <p className="limited"
                 dangerouslySetInnerHTML={{ __html: show.summary.replace(new RegExp('<p>|</p>', 'gi'), '') }} />
 
             <hr style={{ marginTop: '15px', marginBottom: '15px' }} />
 
 
-            <button className="btn-show" onClick={() => { }}> see Episodes </button>
+            <button className="btn-show" onClick={() => { fetchEpisodes(show.id) }}> see Episodes </button>
         </div>
     )
 }
 
+const MakePageForEpisodes = ({ shows, makeTitle }) => {
+
+    return (
+        <>
+            {shows.map((showNow) => { return (<EpiSingliton key={showNow.id} show={showNow} makeTitle={makeTitle} />) })}
+        </>
+    )
+}
+
+
+
+
+const EpiSingliton = ({ show, makeTitle }) => {
+
+    return (
+        <div className="third">
+            <h4 className="epi-title" id={show.id}>  {makeTitle(show)} </h4>
+            <img src={show.image ? show.image.medium ? show.image.medium : show.image.original ? show.image.original : '' : ''} alt={makeTitle(show)} />
+            {show.summary
+                ? <p className="limited"
+                    dangerouslySetInnerHTML={{ __html: show.summary.replace(new RegExp('<p>|</p>', 'gi'), '') }} />
+                : <p>No Summary Available</p>
+            }
+
+            <hr style={{ marginTop: '15px', marginBottom: '15px' }} />
+
+
+            <button className="btn-show" onClick={() => { }}> All Info </button>
+        </div>
+    )
+}

@@ -20,8 +20,11 @@ function App() {
   }, [])
 
   const fetchEpisodes = (showId) => {
+    let selected = Allshows.filter((s) => { return (s.id == showId); });
+    setSelectedShow(selectedShow = selected);
+
     axios.get(`https://api.tvmaze.com/shows/${showId}/episodes`)
-      .then(data => { console.log(data); setEpisodes(episodes = data.data); })
+      .then(data => { if (isShowsVisible) togleShows(); setEpisodes(episodes = data.data); })
   }
 
   const togleShows = () => {
@@ -32,7 +35,6 @@ function App() {
     if (showId == "All Shows") { setSelectedShow(selectedShow = []); if (!isShowsVisible) togleShows(); return; }
     fetchEpisodes(showId);
     let selected = Allshows.filter((s) => { return (s.id == showId); });
-    // console.log('selected', selected)
     setSelectedShow(selectedShow = selected);
     if (isShowsVisible) togleShows();
 
@@ -55,6 +57,7 @@ function App() {
           isShowsVisible={isShowsVisible}
           selectedShow={selectedShow}
           episodes={episodes}
+          fetchEpisodes={fetchEpisodes}
 
         />
       </div>
