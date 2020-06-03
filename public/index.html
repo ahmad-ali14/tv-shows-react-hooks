@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link rel="icon" href="https://raw.githubusercontent.com/ahmad-ali14/tv-show/master/favicon.ico?token=ALB46VXDADEOHLC3Z2F3H2S6264H2" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <meta
@@ -24,11 +24,45 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <title>React App</title>
+
+     <!-- Tell the browser it's a PWA -->
+     <meta name="mobile-web-app-capable" content="yes">
+     <!-- Tell iOS it's a PWA -->
+     <meta name="apple-mobile-web-app-capable" content="yes">
+     
+    <title>Tv Shows Recat Hooks</title>
+
+  
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
+    <div id="root">
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", function () {
+          navigator.serviceWorker
+            .register("service-worker.js")
+            .then(
+              function (registration) {
+                // Registration was successful
+                console.log(
+                  "ServiceWorker registration successful with scope: ",
+                  registration.scope
+                );
+              },
+              function (err) {
+                // registration failed :(
+                console.log("ServiceWorker registration failed: ", err);
+              }
+            )
+            .catch(function (err) {
+              console.log(err);
+            });
+        });
+      } else {
+        console.log("service worker is not supported");
+      }
+    </script>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
@@ -39,5 +73,8 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+    <style>
+   html, body { width: 100%; height: 100%; } body { font-family: sans-serif; line-height: 1.4; }
+    </style>
   </body>
 </html>
