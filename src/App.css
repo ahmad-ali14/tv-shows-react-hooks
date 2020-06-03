@@ -20,12 +20,12 @@
   text-align: center;
 }
 
-.third>p {
+.third > p {
   text-align: justify;
   padding: 5%;
 }
 
-.third>p.lasttext {
+.third > p.lasttext {
   text-align: center;
   padding: 0 auto;
   margin: -20px 0;
@@ -54,7 +54,6 @@
   /* align-items: center; */
   /* text-align: center; */
   margin-left: 1%;
-
 }
 
 .itemsNumber {
@@ -114,4 +113,23 @@
 .margin1in100 {
   margin-left: 10px !important;
   margin-left: 10px !important;
+}
+
+.container {
+  overflow: hidden;
+}
+.column {
+  float: left;
+  margin: 20px;
+  background-color: grey;
+  padding-bottom: 100%;
+  margin-bottom: -100%;
+}
+
+.limited {
+  height: 200px;
+  overflow: hidden;
+  border: 1px solid rgba(f, 0, 0, 0.2);
+  /* text-overflow: ellipsis; */
+  /* /white-space: nowrap; */
 }

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '../App.css'
 
 
-export default ({ shows, isShowsVisible, selectedShow }) => {
+export default ({ shows, isShowsVisible, selectedShow, episodes }) => {
 
 
     const makeTitle = (s) => {
@@ -18,7 +18,7 @@ export default ({ shows, isShowsVisible, selectedShow }) => {
 
     return (
         <>
-            {isShowsVisible ? <MakePageForShows shows={shows} makeTitle={makeTitle} /> : <MakePageForShows shows={selectedShow} makeTitle={makeTitle} />}
+            {isShowsVisible ? <MakePageForShows shows={shows} makeTitle={makeTitle} /> : <MakePageForShows shows={episodes} makeTitle={makeTitle} />}
         </>
     )
 
@@ -30,26 +30,24 @@ const MakePageForShows = ({ shows, makeTitle }) => {
 
     return (
         <>
-            {shows.map((showNow) => { return (<Singliton key={showNow.id} show={showNow} makeTitle={makeTitle} />) })}
+            {shows.map((showNow) => { return (<Singliton key={showNow.id} show={showNow} />) })}
         </>
     )
 }
 
 
 
-const Singliton = ({ show, makeTitle }) => {
+const Singliton = ({ show }) => {
 
     return (
         <div className="third">
-            <h4 className="epi-title" id={show.id}>  {makeTitle(show)} </h4>
-            <img src={show.image.medium} alt={makeTitle(show)} />
-            <p> {show.summary} </p>
-            <p className="lasttext"> status:  Ended   ,
-        rating: 6.5   </p>
-            <p className="lasttext">
-                runtime: 60   ,
-                genres:  DramaScience-FictionThriller
-      </p>
+            <h4 className="epi-title" id={show.id}>  {show.name} </h4>
+            <img src={show.image.medium} alt={show.name} />
+            <p className="limited"
+                dangerouslySetInnerHTML={{ __html: show.summary.replace(new RegExp('<p>|</p>', 'gi'), '') }} />
+
+            <hr style={{ marginTop: '15px', marginBottom: '15px' }} />
+
 
             <button className="btn-show" onClick={() => { }}> see Episodes </button>
         </div>
