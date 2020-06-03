@@ -6,7 +6,7 @@ export default ({ shows, isShowsVisible, selectedShow, episodes, fetchEpisodes }
 
 
     const makeTitle = (s) => {
-        return `${s.name.length > 25 ? s.name.substring(0, 25) : s.name} - S${s.season < 9 ? '0' + s.season : s.season}E${s.number < 9 ? '0' + s.number : s.number}`;
+        return `${s.name.length > 25 ? s.name.substring(0, 23) : s.name} - S${s.season < 9 ? '0' + s.season : s.season}E${s.number < 9 ? '0' + s.number : s.number}`;
 
     }
 
@@ -42,7 +42,7 @@ const Singliton = ({ show, fetchEpisodes }) => {
     return (
         <div className="third">
             <h4 className="epi-title" id={show.id}>  {show.name} </h4>
-            <img src={show.image ? show.image.medium ? show.image.medium : show.image.original ? show.image.original : '' : ''} alt={show.name} />
+            <img height="295px" width="210px" src={show.image ? show.image.medium ? show.image.medium : show.image.original ? show.image.original : `${process.env.PUBLIC_URL}/no-image-found-360x260.png` : `${process.env.PUBLIC_URL}/no-image-found-360x260.png`} alt={show.name} />
             <p className="limited"
                 dangerouslySetInnerHTML={{ __html: show.summary.replace(new RegExp('<p>|</p>', 'gi'), '') }} />
 
@@ -71,7 +71,7 @@ const EpiSingliton = ({ show, makeTitle }) => {
     return (
         <div className="third">
             <h4 className="epi-title" id={show.id}>  {makeTitle(show)} </h4>
-            <img src={show.image ? show.image.medium ? show.image.medium : show.image.original ? show.image.original : '' : ''} alt={makeTitle(show)} />
+            <img height="140px" width="250px" src={show.image ? show.image.medium ? show.image.medium : show.image.original ? show.image.original : `${process.env.PUBLIC_URL}/no-image-found-360x260.png` : `${process.env.PUBLIC_URL}/no-image-found-360x260.png`} alt={makeTitle(show)} />
             {show.summary
                 ? <p className="limited"
                     dangerouslySetInnerHTML={{ __html: show.summary.replace(new RegExp('<p>|</p>', 'gi'), '') }} />
