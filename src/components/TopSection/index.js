@@ -1,7 +1,14 @@
 import React, { useState } from 'react'
 import ShowsDropMenu from './ShowsDropMenu'
 
-export default ({ allShows, togleShows, showSelectedShowEpisodes, selectedShow, isShowsVisible }) => {
+export default ({ allShows, togleShows, showSelectedShowEpisodes, selectedShow, isShowsVisible, togleSingle, showSingle, isEpisodesVisble, togleEpisodes }) => {
+
+    const backToAllShows = () => {
+        if (!isShowsVisible) { togleShows() };
+        if (showSingle) { togleSingle() };
+        if (isEpisodesVisble) { togleEpisodes() };
+        showSelectedShowEpisodes('All Shows');
+    }
     return (
         <>
             <div className="search-wrapper">
@@ -36,8 +43,8 @@ export default ({ allShows, togleShows, showSelectedShowEpisodes, selectedShow, 
                     <option value="rating-">Rating (top first)</option>
                 </select>
 
-                <button id="goBack" onClick={() => { if (!isShowsVisible) { togleShows() }; showSelectedShowEpisodes('All Shows'); }} className="btn-show1 margin1in100"> Back To All Shows </button>
-                {/* <button className="btn-show1 margin1in100" onClick={(e) => { togleShows(); }}> {isShowsVisible ? 'Hide Shows' : 'Show Shows'} </button> */}
+                <button id="goBack" onClick={() => { backToAllShows() }} className="btn-show1 margin1in100"> Back To All Shows </button>
+                <button className="btn-show1 margin1in100" onClick={(e) => { togleShows(); }}> {isShowsVisible ? 'Hide Shows' : 'Show Shows'} </button>
             </div>
         </>
     )

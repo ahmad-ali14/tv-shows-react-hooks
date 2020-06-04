@@ -1,31 +1,59 @@
 import React, { useState, useEffect } from 'react';
 import '../App.css'
+import { makeTitle } from './helpers/index'
 
 
-export default ({ shows, isShowsVisible, selectedShow, episodes, fetchEpisodes, showSelectedShowEpisodes }) => {
+export default ({ shows, isShowsVisible, selectedShow, episodes, fetchEpisodes, showSelectedShowEpisodes, isEpisodesVisible, togleEpisode, singleEpisodes, showSingle, togleSingle, togleEpisodes, setShowSingle }) => {
 
 
-    const makeTitle = (s) => {
-        return `${s.name.length > 25 ? s.name.substring(0, 23) : s.name} - S${s.season < 9 ? '0' + s.season : s.season}E${s.number < 9 ? '0' + s.number : s.number}`;
 
+
+
+
+    const hideEpisodes = () => {
+        let elements = [...document.getElementsByClassName('third')];
+        //console.log('elements', elements);
+        elements.forEach(e => e.setAttribute('display', 'none'))
     }
-
-
-    useEffect(() => {
-        //console.log(props.shows);
-
-    })
 
     return (
         <>
+            {showSingle ? <SingleEpisode /> : ''}
+            {/* {isShowsVisible ? <MakePageForShows
+                shows={shows}
+                showSelectedShowEpisodes={showSelectedShowEpisodes}
+                makeTitle={makeTitle}
+            /> : !isEpisodesVisible ?
+                    <MakePageForEpisodes
+                        shows={episodes}
+                        makeTitle={makeTitle}
+                        togleEpisodes={togleEpisodes}
+                        showSingle={showSingle}
+                        setShowSingle={setShowSingle}
+                        hideEpisodes={hideEpisodes}
+                    /> :
+                    '<SingleEpisode />'
+            } */}
+
+            {!isEpisodesVisible ?
+                <MakePageForEpisodes
+                    shows={episodes}
+                    makeTitle={makeTitle}
+                    togleEpisodes={togleEpisodes}
+                    showSingle={showSingle}
+                    setShowSingle={setShowSingle}
+                    hideEpisodes={hideEpisodes}
+                /> : ''}
+
             {isShowsVisible ? <MakePageForShows
                 shows={shows}
                 showSelectedShowEpisodes={showSelectedShowEpisodes}
                 makeTitle={makeTitle}
-            /> :
-                <MakePageForEpisodes
-                    shows={episodes}
-                    makeTitle={makeTitle} />}
+                togleSingle={togleSingle}
+            /> : ''}
+
+
+
         </>
     )
 
@@ -33,7 +61,7 @@ export default ({ shows, isShowsVisible, selectedShow, episodes, fetchEpisodes, 
 }
 
 
-const MakePageForShows = ({ shows, showSelectedShowEpisodes }) => {
+const MakePageForShows = ({ shows, showSelectedShowEpisodes, togleSingle }) => {
 
     return (
         <>
@@ -42,6 +70,7 @@ const MakePageForShows = ({ shows, showSelectedShowEpisodes }) => {
                     key={showNow.id}
                     show={showNow}
                     showSelectedShowEpisodes={showSelectedShowEpisodes}
+                    togleSingle={togleSingle}
                 />)
             })}
         </>
@@ -67,11 +96,22 @@ const Singliton = ({ show, showSelectedShowEpisodes }) => {
     )
 }
 
-const MakePageForEpisodes = ({ shows, makeTitle }) => {
+const MakePageForEpisodes = ({ shows, makeTitle, togleEpisodes, isEpisodesVisible, showSingle, setShowSingle, hideEpisodes }) => {
 
     return (
         <>
-            {shows.map((showNow) => { return (<EpiSingliton key={showNow.id} show={showNow} makeTitle={makeTitle} />) })}
+            {shows.map((showNow) => {
+                return (<EpiSingliton
+                    key={showNow.id} show={showNow}
+                    makeTitle={makeTitle}
+                    togleEpisodes={togleEpisodes}
+                    isEpisodesVisible={isEpisodesVisible}
+                    showSingle={showSingle}
+                    setShowSingle={setShowSingle}
+                    hideEpisodes={hideEpisodes}
+
+                />)
+            })}
         </>
     )
 }
@@ -79,7 +119,7 @@ const MakePageForEpisodes = ({ shows, makeTitle }) => {
 
 
 
-const EpiSingliton = ({ show, makeTitle }) => {
+const EpiSingliton = ({ show, makeTitle, togleEpisodes, isEpisodesVisible, showSingle, setShowSingle, hideEpisodes }) => {
 
     return (
         <div className="third">
@@ -94,7 +134,12 @@ const EpiSingliton = ({ show, makeTitle }) => {
             <hr style={{ marginTop: '15px', marginBottom: '15px' }} />
 
 
-            <button className="btn-show" onClick={() => { }}> All Info </button>
+            <button className="btn-show" onClick={() => { togleEpisodes(); hideEpisodes(); setShowSingle(showSingle = !showSingle) }}> All Info </button>
         </div>
     )
+}
+
+
+const SingleEpisode = () => {
+    return <div> single Episode </div>
 }

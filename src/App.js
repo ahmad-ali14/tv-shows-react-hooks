@@ -12,8 +12,11 @@ import axios from 'axios';
 function App() {
   var [Allshows, setAllShows] = useState([]);
   var [isShowsVisible, setIsShowsVisible] = useState(true)
+  var [isEpisodesVisble, setIsEpisodesVisble] = useState(true)
   var [selectedShow, setSelectedShow] = useState([]);
   var [episodes, setEpisodes] = useState([])
+  var [singleEpisode, setSingleEpisode] = useState({})
+  var [showSingle, setShowSingle] = useState(false);
 
   useEffect(() => {
     setAllShows(Allshows = [...getShows()])
@@ -27,18 +30,53 @@ function App() {
       .then(data => { if (isShowsVisible) togleShows(); setEpisodes(episodes = data.data); })
   }
 
+
+  const show = (thing) => {
+    switch (thing) {
+      case 'shows': setIsShowsVisible(isShowsVisible = true); break;
+      case 'episodes': setIsEpisodesVisble(isEpisodesVisble = true); break;
+      case 'single episode': setShowSingle(showSingle = true); break;
+
+      default: break;
+    }
+  }
+
+  const hide = (thing) => {
+    switch (thing) {
+      case 'shows': setIsShowsVisible(isShowsVisible = false); break;
+      case 'episodes': setIsEpisodesVisble(isEpisodesVisble = false); break;
+      case 'single episode': setShowSingle(showSingle = false); break;
+
+      default: break;
+    }
+  }
+
+
   const togleShows = () => {
     setIsShowsVisible(isShowsVisible = !isShowsVisible)
   }
 
+  const togleSingle = () => {
+    setShowSingle(showSingle = !showSingle);
+  }
+
+  const togleEpisodes = () => {
+    setIsEpisodesVisble(isEpisodesVisble = !isEpisodesVisble)
+    setEpisodes(episodes = []);
+  }
+
   const showSelectedShowEpisodes = (showId) => {
-    if (showId == "All Shows") { setSelectedShow(selectedShow = []); if (!isShowsVisible) togleShows(); return; }
+    if (showId == "All Shows") { setSelectedShow(selectedShow = []); show('shows'); hide('episodes'); return; }
     fetchEpisodes(showId);
     let selected = Allshows.filter((s) => { return (s.id == showId); });
     setSelectedShow(selectedShow = selected);
     if (isShowsVisible) togleShows();
 
     return;
+  }
+
+  const selectSingleEpisode = () => {
+
   }
 
   return (
@@ -50,6 +88,10 @@ function App() {
           selectedShow={selectedShow}
           showSelectedShowEpisodes={showSelectedShowEpisodes}
           isShowsVisible={isShowsVisible}
+          togleSingle={togleSingle}
+          showSingle={showSingle}
+          isEpisodesVisble={isEpisodesVisble}
+          togleEpisodes={togleEpisodes}
         />}
       <div className="root">
         <Main
@@ -59,6 +101,14 @@ function App() {
           episodes={episodes}
           fetchEpisodes={fetchEpisodes}
           showSelectedShowEpisodes={showSelectedShowEpisodes}
+          togleEpisodes={togleEpisodes}
+          isEpisodesVisble={isEpisodesVisble}
+          togleSingle={togleSingle}
+          singleEpisode={singleEpisode}
+          selectSingleEpisode={selectSingleEpisode}
+          showSingle={showSingle}
+          togleEpisode={togleEpisodes}
+          setShowSingle={setShowSingle}
 
         />
       </div>
