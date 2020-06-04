@@ -58,6 +58,7 @@ function App() {
           selectedShow={selectedShow}
           episodes={episodes}
           fetchEpisodes={fetchEpisodes}
+          showSelectedShowEpisodes={showSelectedShowEpisodes}
 
         />
       </div>

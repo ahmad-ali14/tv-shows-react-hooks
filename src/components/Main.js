@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '../App.css'
 
 
-export default ({ shows, isShowsVisible, selectedShow, episodes, fetchEpisodes }) => {
+export default ({ shows, isShowsVisible, selectedShow, episodes, fetchEpisodes, showSelectedShowEpisodes }) => {
 
 
     const makeTitle = (s) => {
@@ -18,7 +18,14 @@ export default ({ shows, isShowsVisible, selectedShow, episodes, fetchEpisodes }
 
     return (
         <>
-            {isShowsVisible ? <MakePageForShows shows={shows} fetchEpisodes={fetchEpisodes} makeTitle={makeTitle} /> : <MakePageForEpisodes shows={episodes} makeTitle={makeTitle} />}
+            {isShowsVisible ? <MakePageForShows
+                shows={shows}
+                showSelectedShowEpisodes={showSelectedShowEpisodes}
+                makeTitle={makeTitle}
+            /> :
+                <MakePageForEpisodes
+                    shows={episodes}
+                    makeTitle={makeTitle} />}
         </>
     )
 
@@ -26,18 +33,24 @@ export default ({ shows, isShowsVisible, selectedShow, episodes, fetchEpisodes }
 }
 
 
-const MakePageForShows = ({ shows, fetchEpisodes }) => {
+const MakePageForShows = ({ shows, showSelectedShowEpisodes }) => {
 
     return (
         <>
-            {shows.map((showNow) => { return (<Singliton key={showNow.id} show={showNow} fetchEpisodes={fetchEpisodes} />) })}
+            {shows.map((showNow) => {
+                return (<Singliton
+                    key={showNow.id}
+                    show={showNow}
+                    showSelectedShowEpisodes={showSelectedShowEpisodes}
+                />)
+            })}
         </>
     )
 }
 
 
 
-const Singliton = ({ show, fetchEpisodes }) => {
+const Singliton = ({ show, showSelectedShowEpisodes }) => {
 
     return (
         <div className="third">
@@ -49,7 +62,7 @@ const Singliton = ({ show, fetchEpisodes }) => {
             <hr style={{ marginTop: '15px', marginBottom: '15px' }} />
 
 
-            <button className="btn-show" onClick={() => { fetchEpisodes(show.id) }}> see Episodes </button>
+            <button className="btn-show" onClick={() => { showSelectedShowEpisodes(show.id) }}> see Episodes </button>
         </div>
     )
 }

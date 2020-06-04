@@ -37,7 +37,7 @@ export default ({ allShows, togleShows, showSelectedShowEpisodes, selectedShow, 
                 </select>
 
                 <button id="goBack" onClick={() => { if (!isShowsVisible) { togleShows() }; showSelectedShowEpisodes('All Shows'); }} className="btn-show1 margin1in100"> Back To All Shows </button>
-                <button className="btn-show1 margin1in100" onClick={(e) => { togleShows(); }}> {isShowsVisible ? 'Hide Shows' : 'Show Shows'} </button>
+                {/* <button className="btn-show1 margin1in100" onClick={(e) => { togleShows(); }}> {isShowsVisible ? 'Hide Shows' : 'Show Shows'} </button> */}
             </div>
         </>
     )
