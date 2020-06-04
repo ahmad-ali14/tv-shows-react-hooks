@@ -3,18 +3,18 @@ import '../App.css'
 import { makeTitle } from './helpers/index'
 
 
-export default ({ shows, isShowsVisible, selectedShow, episodes, fetchEpisodes, showSelectedShowEpisodes, isEpisodesVisible, togleEpisode, singleEpisodes, showSingle, togleSingle, togleEpisodes, setShowSingle }) => {
+export default ({ AllShows, isShowsVisible, selectedShow, episodes, fetchEpisodes, showSelectedShowEpisodes, isEpisodesVisble, singleEpisode, showSingle, setShowSingle, show, hide }) => {
 
 
 
 
 
 
-    const hideEpisodes = () => {
-        let elements = [...document.getElementsByClassName('third')];
-        //console.log('elements', elements);
-        elements.forEach(e => e.setAttribute('display', 'none'))
-    }
+    // const hideEpisodes = () => {
+    //     let elements = [...document.getElementsByClassName('third')];
+    //     //console.log('elements', elements);
+    //     elements.forEach(e => e.setAttribute('display', 'none'))
+    // }
 
     return (
         <>
@@ -35,21 +35,23 @@ export default ({ shows, isShowsVisible, selectedShow, episodes, fetchEpisodes, 
                     '<SingleEpisode />'
             } */}
 
-            {!isEpisodesVisible ?
+            {isEpisodesVisble ?
                 <MakePageForEpisodes
                     shows={episodes}
                     makeTitle={makeTitle}
-                    togleEpisodes={togleEpisodes}
+                    show={show}
+                    hide={hide}
                     showSingle={showSingle}
                     setShowSingle={setShowSingle}
-                    hideEpisodes={hideEpisodes}
+                //hideEpisodes={hideEpisodes}
                 /> : ''}
 
             {isShowsVisible ? <MakePageForShows
-                shows={shows}
+                shows={AllShows}
                 showSelectedShowEpisodes={showSelectedShowEpisodes}
                 makeTitle={makeTitle}
-                togleSingle={togleSingle}
+                show={show}
+                hide={hide}
             /> : ''}
 
 
@@ -61,16 +63,16 @@ export default ({ shows, isShowsVisible, selectedShow, episodes, fetchEpisodes, 
 }
 
 
-const MakePageForShows = ({ shows, showSelectedShowEpisodes, togleSingle }) => {
+const MakePageForShows = ({ shows, showSelectedShowEpisodes, show, hide }) => {
 
     return (
         <>
             {shows.map((showNow) => {
                 return (<Singliton
                     key={showNow.id}
-                    show={showNow}
+                    singleShow={showNow}
                     showSelectedShowEpisodes={showSelectedShowEpisodes}
-                    togleSingle={togleSingle}
+                //togleSingle={togleSingle}
                 />)
             })}
         </>
@@ -79,8 +81,8 @@ const MakePageForShows = ({ shows, showSelectedShowEpisodes, togleSingle }) => {
 
 
 
-const Singliton = ({ show, showSelectedShowEpisodes }) => {
-
+const Singliton = ({ singleShow, showSelectedShowEpisodes }) => {
+    let show = singleShow;
     return (
         <div className="third">
             <h4 className="epi-title" id={show.id}>  {show.name} </h4>
@@ -96,19 +98,20 @@ const Singliton = ({ show, showSelectedShowEpisodes }) => {
     )
 }
 
-const MakePageForEpisodes = ({ shows, makeTitle, togleEpisodes, isEpisodesVisible, showSingle, setShowSingle, hideEpisodes }) => {
+const MakePageForEpisodes = ({ shows, makeTitle, togleEpisodes, isEpisodesVisible, showSingle, setShowSingle, show, hide }) => {
 
     return (
         <>
             {shows.map((showNow) => {
                 return (<EpiSingliton
-                    key={showNow.id} show={showNow}
+                    key={showNow.id}
+                    epi={showNow}
                     makeTitle={makeTitle}
-                    togleEpisodes={togleEpisodes}
                     isEpisodesVisible={isEpisodesVisible}
                     showSingle={showSingle}
                     setShowSingle={setShowSingle}
-                    hideEpisodes={hideEpisodes}
+                    show={show}
+                    hide={hide}
 
                 />)
             })}
@@ -119,22 +122,26 @@ const MakePageForEpisodes = ({ shows, makeTitle, togleEpisodes, isEpisodesVisibl
 
 
 
-const EpiSingliton = ({ show, makeTitle, togleEpisodes, isEpisodesVisible, showSingle, setShowSingle, hideEpisodes }) => {
+const EpiSingliton = ({ epi, makeTitle, show, hide, isEpisodesVisible, showSingle, setShowSingle, }) => {
 
     return (
         <div className="third">
-            <h4 className="epi-title" id={show.id}>  {makeTitle(show)} </h4>
-            <img height="140px" width="250px" src={show.image ? show.image.medium ? show.image.medium : show.image.original ? show.image.original : `${process.env.PUBLIC_URL}/no-image-found-360x260.png` : `${process.env.PUBLIC_URL}/no-image-found-360x260.png`} alt={makeTitle(show)} />
-            {show.summary
+            <h4 className="epi-title" id={epi.id}>  {makeTitle(epi)} </h4>
+            <img height="140px" width="250px" src={epi.image ? epi.image.medium ? epi.image.medium : epi.image.original ? epi.image.original : `${process.env.PUBLIC_URL}/no-image-found-360x260.png` : `${process.env.PUBLIC_URL}/no-image-found-360x260.png`} alt={makeTitle(epi)} />
+            {epi.summary
                 ? <p className="limited"
-                    dangerouslySetInnerHTML={{ __html: show.summary.replace(new RegExp('<p>|</p>', 'gi'), '') }} />
+                    dangerouslySetInnerHTML={{ __html: epi.summary.replace(new RegExp('<p>|</p>', 'gi'), '') }} />
                 : <p>No Summary Available</p>
             }
 
             <hr style={{ marginTop: '15px', marginBottom: '15px' }} />
 
 
-            <button className="btn-show" onClick={() => { togleEpisodes(); hideEpisodes(); setShowSingle(showSingle = !showSingle) }}> All Info </button>
+            <button className="btn-show" onClick={() => {
+                hide('episodes'); show('single episode');
+                //togleEpisodes(); hideEpisodes(); setShowSingle(showSingle = !showSingle)
+
+            }}> All Info </button>
         </div>
     )
 }

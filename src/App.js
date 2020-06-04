@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import logo from './logo.svg';
 import './App.css';
-import getShows, { getOneShow } from './data/shows';
+import getShows from './data/shows';
 import Main from './components/Main';
 import TopSection from './components/TopSection'
 import axios from 'axios';
@@ -9,10 +8,11 @@ import axios from 'axios';
 
 
 
+
 function App() {
   var [Allshows, setAllShows] = useState([]);
   var [isShowsVisible, setIsShowsVisible] = useState(true)
-  var [isEpisodesVisble, setIsEpisodesVisble] = useState(true)
+  var [isEpisodesVisble, setIsEpisodesVisble] = useState(false)
   var [selectedShow, setSelectedShow] = useState([]);
   var [episodes, setEpisodes] = useState([])
   var [singleEpisode, setSingleEpisode] = useState({})
@@ -22,12 +22,13 @@ function App() {
     setAllShows(Allshows = [...getShows()])
   }, [])
 
+
   const fetchEpisodes = (showId) => {
     let selected = Allshows.filter((s) => { return (s.id == showId); });
     setSelectedShow(selectedShow = selected);
 
     axios.get(`https://api.tvmaze.com/shows/${showId}/episodes`)
-      .then(data => { if (isShowsVisible) togleShows(); setEpisodes(episodes = data.data); })
+      .then(data => { setEpisodes(episodes = data.data); })
   }
 
 
@@ -68,10 +69,11 @@ function App() {
   const showSelectedShowEpisodes = (showId) => {
     if (showId == "All Shows") { setSelectedShow(selectedShow = []); show('shows'); hide('episodes'); return; }
     fetchEpisodes(showId);
+    hide('shows');
+    show('episodes');
     let selected = Allshows.filter((s) => { return (s.id == showId); });
     setSelectedShow(selectedShow = selected);
-    if (isShowsVisible) togleShows();
-
+    // if (isShowsVisible) togleShows();
     return;
   }
 
@@ -92,25 +94,29 @@ function App() {
           showSingle={showSingle}
           isEpisodesVisble={isEpisodesVisble}
           togleEpisodes={togleEpisodes}
+          hide={hide}
+          show={show}
         />}
       <div className="root">
         <Main
-          shows={Allshows}
+          AllShows={Allshows}
           isShowsVisible={isShowsVisible}
+          isEpisodesVisble={isEpisodesVisble}
+          showSingle={showSingle}
+          show={show}
+          hide={hide}
+
           selectedShow={selectedShow}
           episodes={episodes}
           fetchEpisodes={fetchEpisodes}
           showSelectedShowEpisodes={showSelectedShowEpisodes}
-          togleEpisodes={togleEpisodes}
-          isEpisodesVisble={isEpisodesVisble}
-          togleSingle={togleSingle}
           singleEpisode={singleEpisode}
           selectSingleEpisode={selectSingleEpisode}
-          showSingle={showSingle}
-          togleEpisode={togleEpisodes}
           setShowSingle={setShowSingle}
 
         />
+
+
       </div>
     </>
   );
@@ -118,4 +124,5 @@ function App() {
 
 
 export default App;
+
 

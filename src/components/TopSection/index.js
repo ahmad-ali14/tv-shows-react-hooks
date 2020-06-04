@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import ShowsDropMenu from './ShowsDropMenu'
 
-export default ({ allShows, togleShows, showSelectedShowEpisodes, selectedShow, isShowsVisible, togleSingle, showSingle, isEpisodesVisble, togleEpisodes }) => {
+export default ({ allShows, togleShows, showSelectedShowEpisodes, selectedShow, isShowsVisible, togleSingle, showSingle, isEpisodesVisble, togleEpisodes, hide, show }) => {
 
     const backToAllShows = () => {
-        if (!isShowsVisible) { togleShows() };
-        if (showSingle) { togleSingle() };
-        if (isEpisodesVisble) { togleEpisodes() };
+        hide('episodes');
+        hide('single episode')
+        show('shows')
         showSelectedShowEpisodes('All Shows');
     }
     return (
@@ -44,7 +44,7 @@ export default ({ allShows, togleShows, showSelectedShowEpisodes, selectedShow, 
                 </select>
 
                 <button id="goBack" onClick={() => { backToAllShows() }} className="btn-show1 margin1in100"> Back To All Shows </button>
-                <button className="btn-show1 margin1in100" onClick={(e) => { togleShows(); }}> {isShowsVisible ? 'Hide Shows' : 'Show Shows'} </button>
+                {/* <button className="btn-show1 margin1in100" onClick={(e) => { isEpisodesVisble ? hide('shows') : show('shows') }}> {isShowsVisible ? 'Hide Shows' : 'Show Shows'} </button> */}
             </div>
         </>
     )
