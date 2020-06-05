@@ -17,8 +17,9 @@ export default ({ allShows, showSelectedShowEpisodes,
                     selectedShow={selectedShow}
                     isShowsVisible={isShowsVisible}
                 />
-                <label htmlFor="selectBox" className="searchBarStyle"> Select an Episode: </label>
-                <div id="selectBox" > </div>
+                {isEpisodesVisble && <>
+                    <label htmlFor="selectBox" className="searchBarStyle"> Select an Episode: </label>
+                    <div id="selectBox" > </div> </>}
             </div>
             <div className="search-wrapper">
 
