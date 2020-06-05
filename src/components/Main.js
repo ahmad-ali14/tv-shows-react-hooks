@@ -3,37 +3,21 @@ import '../App.css'
 import { makeTitle } from './helpers/index'
 
 
-export default ({ AllShows, isShowsVisible, selectedShow, episodes, fetchEpisodes, showSelectedShowEpisodes, isEpisodesVisble, singleEpisode, showSingle, setShowSingle, show, hide }) => {
+const Main = ({ AllShows, isShowsVisible, selectedShow,
+    episodes, fetchEpisodes, showSelectedShowEpisodes,
+    isEpisodesVisble, singleEpisode, showSingle,
+    setShowSingle, show, hide, selectSingleEpisode }) => {
 
 
-
-
-
-
-    // const hideEpisodes = () => {
-    //     let elements = [...document.getElementsByClassName('third')];
-    //     //console.log('elements', elements);
-    //     elements.forEach(e => e.setAttribute('display', 'none'))
-    // }
 
     return (
         <>
-            {showSingle ? <SingleEpisode /> : ''}
-            {/* {isShowsVisible ? <MakePageForShows
-                shows={shows}
-                showSelectedShowEpisodes={showSelectedShowEpisodes}
-                makeTitle={makeTitle}
-            /> : !isEpisodesVisible ?
-                    <MakePageForEpisodes
-                        shows={episodes}
-                        makeTitle={makeTitle}
-                        togleEpisodes={togleEpisodes}
-                        showSingle={showSingle}
-                        setShowSingle={setShowSingle}
-                        hideEpisodes={hideEpisodes}
-                    /> :
-                    '<SingleEpisode />'
-            } */}
+            {showSingle ? <SingleEpisodeSingiliton
+                sshow={selectedShow}
+                epi={singleEpisode}
+                hide={hide}
+                show={show}
+            /> : ''}
 
             {isEpisodesVisble ?
                 <MakePageForEpisodes
@@ -43,7 +27,7 @@ export default ({ AllShows, isShowsVisible, selectedShow, episodes, fetchEpisode
                     hide={hide}
                     showSingle={showSingle}
                     setShowSingle={setShowSingle}
-                //hideEpisodes={hideEpisodes}
+                    selectSingleEpisode={selectSingleEpisode}
                 /> : ''}
 
             {isShowsVisible ? <MakePageForShows
@@ -53,8 +37,6 @@ export default ({ AllShows, isShowsVisible, selectedShow, episodes, fetchEpisode
                 show={show}
                 hide={hide}
             /> : ''}
-
-
 
         </>
     )
@@ -98,7 +80,8 @@ const Singliton = ({ singleShow, showSelectedShowEpisodes }) => {
     )
 }
 
-const MakePageForEpisodes = ({ shows, makeTitle, togleEpisodes, isEpisodesVisible, showSingle, setShowSingle, show, hide }) => {
+const MakePageForEpisodes = ({ shows, makeTitle, togleEpisodes, isEpisodesVisible,
+    showSingle, setShowSingle, show, hide, selectSingleEpisode }) => {
 
     return (
         <>
@@ -112,6 +95,7 @@ const MakePageForEpisodes = ({ shows, makeTitle, togleEpisodes, isEpisodesVisibl
                     setShowSingle={setShowSingle}
                     show={show}
                     hide={hide}
+                    selectSingleEpisode={selectSingleEpisode}
 
                 />)
             })}
@@ -122,7 +106,8 @@ const MakePageForEpisodes = ({ shows, makeTitle, togleEpisodes, isEpisodesVisibl
 
 
 
-const EpiSingliton = ({ epi, makeTitle, show, hide, isEpisodesVisible, showSingle, setShowSingle, }) => {
+const EpiSingliton = ({ epi, makeTitle, show, hide, isEpisodesVisible,
+    showSingle, setShowSingle, selectSingleEpisode }) => {
 
     return (
         <div className="third">
@@ -138,15 +123,55 @@ const EpiSingliton = ({ epi, makeTitle, show, hide, isEpisodesVisible, showSingl
 
 
             <button className="btn-show" onClick={() => {
-                hide('episodes'); show('single episode');
-                //togleEpisodes(); hideEpisodes(); setShowSingle(showSingle = !showSingle)
-
-            }}> All Info </button>
+                hide('episodes'); show('single episode'); selectSingleEpisode(epi.id);
+            }}> Episode Info </button>
         </div>
     )
 }
 
 
-const SingleEpisode = () => {
-    return <div> single Episode </div>
+const SingleEpisodeSingiliton = ({ epi, sshow, hide, show }) => {
+    let ss = sshow[0]
+    let ep = epi[0];
+    console.log(epi[0])
+
+
+    return (
+        <>
+            <div className="half">
+                <h4 className="epi-title" id={ep.id}> Episode:  {makeTitle(ep)} </h4>
+
+                {ep.summary
+                    ? <p className="fixed"
+                        dangerouslySetInnerHTML={{ __html: ep.summary.replace(new RegExp('<p>|</p>', 'gi'), '') }} />
+                    : <p>No Summary Available</p>
+                }
+
+                <p> First Release: {`${ep.airdate} at: ${ep.airtime}`}</p>
+                <p> Run Time: {`${ep.runtime} mins`}</p>
+
+                <a href={ep.url}> <button className="btn-show" onClick={() => { }}> Show on TV mase </button> </a>
+
+                <button className="btn-show" onClick={() => { hide('single episode'); show('episodes') }}> Back To Episodes </button>
+
+                <hr style={{ marginTop: '15px', marginBottom: '15px' }} />
+                <img width="100%" src={ep.image ? ep.image.medium ? ep.image.medium : ep.image.original ? ep.image.original : `${process.env.PUBLIC_URL}/no-image-found-360x260.png` : `${process.env.PUBLIC_URL}/no-image-found-360x260.png`} alt={makeTitle(ep)} />
+            </div>
+
+            <div className="half" >
+                <h4 className="epi-title" id={ss.id}> show: {ss.name} </h4>
+                {ss.summary
+                    ? <p className="fixed"
+                        dangerouslySetInnerHTML={{ __html: ss.summary.replace(new RegExp('<p>|</p>', 'gi'), '') }} />
+                    : <p>No Summary Available</p>}
+
+
+
+                <hr style={{ marginTop: '15px', marginBottom: '15px' }} />
+                <img width="100%" src={ss.image ? ss.image.medium ? ss.image.medium : ss.image.original ? ss.image.original : `${process.env.PUBLIC_URL}/no-image-found-360x260.png` : `${process.env.PUBLIC_URL}/no-image-found-360x260.png`} alt={ss.name} />
+            </div>
+        </>
+    )
 }
+
+export default Main;
