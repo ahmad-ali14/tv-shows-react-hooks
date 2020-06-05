@@ -115,9 +115,6 @@ function App() {
   }
 
 
-
-
-
   const backToAllShows = () => {
     hide('episodes');
     hide('single episode')
