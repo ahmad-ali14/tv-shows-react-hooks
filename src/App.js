@@ -15,7 +15,7 @@ function App() {
   var [isEpisodesVisble, setIsEpisodesVisble] = useState(false)
   var [selectedShow, setSelectedShow] = useState([]);
   var [episodes, setEpisodes] = useState([])
-  var [singleEpisode, setSingleEpisode] = useState({})
+  var [singleEpisode, setSingleEpisode] = useState([])
   var [showSingle, setShowSingle] = useState(false);
 
   useEffect(() => {
@@ -53,19 +53,6 @@ function App() {
   }
 
 
-  const togleShows = () => {
-    setIsShowsVisible(isShowsVisible = !isShowsVisible)
-  }
-
-  const togleSingle = () => {
-    setShowSingle(showSingle = !showSingle);
-  }
-
-  const togleEpisodes = () => {
-    setIsEpisodesVisble(isEpisodesVisble = !isEpisodesVisble)
-    setEpisodes(episodes = []);
-  }
-
   const showSelectedShowEpisodes = (showId) => {
     if (showId == "All Shows") { setSelectedShow(selectedShow = []); show('shows'); hide('episodes'); return; }
     fetchEpisodes(showId);
@@ -73,12 +60,13 @@ function App() {
     show('episodes');
     let selected = Allshows.filter((s) => { return (s.id == showId); });
     setSelectedShow(selectedShow = selected);
-    // if (isShowsVisible) togleShows();
     return;
   }
 
-  const selectSingleEpisode = () => {
-
+  const selectSingleEpisode = (epiId) => {
+    let selected = episodes.filter((s) => { return (s.id == epiId); });
+    setSingleEpisode(singleEpisode = selected);
+    return;
   }
 
   return (
@@ -86,14 +74,11 @@ function App() {
       <h1 className="main-title"> TV Shows React Hooks </h1>
       {Allshows.length > 0 &&
         <TopSection allShows={Allshows}
-          togleShows={togleShows}
           selectedShow={selectedShow}
           showSelectedShowEpisodes={showSelectedShowEpisodes}
           isShowsVisible={isShowsVisible}
-          togleSingle={togleSingle}
           showSingle={showSingle}
           isEpisodesVisble={isEpisodesVisble}
-          togleEpisodes={togleEpisodes}
           hide={hide}
           show={show}
         />}
@@ -105,7 +90,6 @@ function App() {
           showSingle={showSingle}
           show={show}
           hide={hide}
-
           selectedShow={selectedShow}
           episodes={episodes}
           fetchEpisodes={fetchEpisodes}
