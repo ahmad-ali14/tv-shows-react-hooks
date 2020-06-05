@@ -10,20 +10,16 @@ export const extractPhoto = (obj) => {
 }
 
 export const doSort = (v) => {
-    console.log(v);
-    if (v == 'name-a-z') {
+    if (v === 'name-a-z') {
         return function compare(a, b) {
             if (a.name > b.name) return 1;
             if (b.name > a.name) return -1;
 
             return 0;
         }
-
-        // doingDiffSort(compare);
-
     }
 
-    if (v == 'name-z-a') {
+    if (v === 'name-z-a') {
         return function compare(a, b) {
             if (b.name > a.name) return 1;
             if (a.name > b.name) return -1;
@@ -31,11 +27,9 @@ export const doSort = (v) => {
             return 0;
         }
 
-        // doingDiffSort(compare);
-
     }
 
-    if (v == 'rating+') {
+    if (v === 'rating+') {
         return function compare(a, b) {
             if (a.rating.average > b.rating.average) return 1;
             if (b.rating.average > a.rating.average) return -1;
@@ -43,24 +37,15 @@ export const doSort = (v) => {
             return 0;
         }
 
-        //  doingDiffSort(compare);
-
     }
 
-    if (v == 'rating-') {
+    if (v === 'rating-') {
         return function compare(a, b) {
             if (b.rating.average > a.rating.average) return 1;
             if (a.rating.average > b.rating.average) return -1;
 
             return 0;
         }
-
-        //  doingDiffSort(compare);
-
-    }
-
-    if (v == 'no-sort') {
-        // setup();
 
     }
 }

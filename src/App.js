@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, } from 'react';
 import './App.css';
 import getShows from './data/shows';
 import Main from './components/Main';
@@ -23,7 +23,6 @@ function App() {
   var [compare, setCompare] = useState('no-sort');
   var [showSortdShow, setShowSortdShow] = useState(false);
   var [showSortedEpis, setShowSortedEpis] = useState(false);
-  var [searchValue, setSearchValue] = useState('');
   var [searchedShows, setSearchedShows] = useState([])
   var [searchedEpisodes, setSearchedEpisodes] = useState([])
   var [showSearchedShows, setShowSearchedShows] = useState(false)
@@ -134,13 +133,6 @@ function App() {
   }
 
   const doSeacrh = (value) => {
-    // if (value = '') {
-    //   hide('sorted shows')
-    //   // setSearchedShows(searchedShows = [])
-    //   // hide('sorted shows');
-    //   show('shows');
-    //   return;
-    // }
     let term = value.trim();
     if (isShowsVisible) {
 
@@ -161,8 +153,6 @@ function App() {
       show('searched episodes');
       return;
     }
-
-
 
   }
 

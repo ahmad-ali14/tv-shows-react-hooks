@@ -1,7 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
 import ShowsDropMenu from './ShowsDropMenu';
 import EpisodesDropDown from './EpisodesDropDown';
-import { doSort } from '../helpers/index'
 
 const TopSection = ({ allShows, showSelectedShowEpisodes,
     selectedShow, isShowsVisible, isEpisodesVisble,

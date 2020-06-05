@@ -11,7 +11,7 @@ export default ({ allShows, showSelectedShowEpisodes, selectedShow,
 
     return (
         <select id="showSelector" autoFocus="-1" value={selectedShow.length > 0 ? selectedShow[0].id : ''} onChange={(e) => { showSelectedShowEpisodes(e.target.value) }}>
-            <option id="defaultShowSelection" value="All Shows" selected={isShowsVisible ? true : false} >All Shows </option>
+            <option id="defaultShowSelection" value="All Shows" defaultValue={isShowsVisible ? true : false} >All Shows </option>
             {fillOptions(allShows)}
         </select>
     )

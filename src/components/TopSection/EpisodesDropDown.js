@@ -13,7 +13,7 @@ const EpisodesDropDown = ({ episodes, showSelectedShowEpisodes, singleEpisode,
     return (
         <>
             <select id="showSelector" autoFocus="-1" value={singleEpisode.length > 0 ? singleEpisode[0].id : ''} onChange={(e) => { hide('episodes'); show('single episode'); selectSingleEpisode(e.target.value); }}>
-                <option id="defaultShowSelection" value="All Episodes" selected={isEpisodesVisible ? true : false} >All Episodes </option>
+                <option id="defaultShowSelection" value="All Episodes" defaultValue={isEpisodesVisible ? true : false} >All Episodes </option>
                 {fillOptions(episodes)}
             </select>
         </>
