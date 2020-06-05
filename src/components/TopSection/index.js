@@ -37,8 +37,8 @@ export default ({ allShows, togleShows, showSelectedShowEpisodes,
                     <option value="no-sort" >No Sort</option>
                     <option value="name-a-z" >Name A-Z</option>
                     <option value="name-z-a">Name Z-A</option>
-                    <option value="rating+">Rating (least first)</option>
-                    <option value="rating-">Rating (top first)</option>
+                    {!isEpisodesVisble ? <option value="rating+">Rating (least first)</option> : ''}
+                    {!isEpisodesVisble ? <option value="rating-">Rating (top first)</option> : ''}
                 </select>
 
                 <button id="goBack" onClick={() => { backToAllShows() }} className="btn-show1 margin1in100"> Back To All Shows </button>
