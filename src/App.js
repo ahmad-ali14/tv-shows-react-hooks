@@ -23,6 +23,11 @@ function App() {
   var [compare, setCompare] = useState('no-sort');
   var [showSortdShow, setShowSortdShow] = useState(false);
   var [showSortedEpis, setShowSortedEpis] = useState(false);
+  var [searchValue, setSearchValue] = useState('');
+  var [searchedShows, setSearchedShows] = useState([])
+  var [searchedEpisodes, setSearchedEpisodes] = useState([])
+  var [showSearchedShows, setShowSearchedShows] = useState(false)
+  var [showSearchedEpisodes, setShowSearchedEpisodes] = useState(false)
 
   useEffect(() => {
     setAllShows(Allshows = [...getShows()])
@@ -45,6 +50,8 @@ function App() {
       case 'single episode': setShowSingle(showSingle = true); break;
       case 'sorted shows': setShowSortdShow(showSortdShow = true); break;
       case 'sorted episodes': setShowSortedEpis(showSortedEpis = true); break;
+      case 'searched shows': setShowSearchedShows(showSearchedShows = true); break;
+      case 'searched episodes': setShowSearchedEpisodes(showSearchedEpisodes = true); break;
 
       default: break;
     }
@@ -57,6 +64,8 @@ function App() {
       case 'single episode': setShowSingle(showSingle = false); break;
       case 'sorted shows': setShowSortdShow(showSortdShow = false); break;
       case 'sorted episodes': setShowSortedEpis(showSortedEpis = false); break;
+      case 'searched shows': setShowSearchedShows(showSearchedShows = false); break;
+      case 'searched episodes': setShowSearchedEpisodes(showSearchedEpisodes = false); break;
 
       default: break;
     }
@@ -115,6 +124,43 @@ function App() {
 
   }
 
+  const doSeacrh = (value) => {
+    // if (value = '') {
+    //   hide('sorted shows')
+    //   // setSearchedShows(searchedShows = [])
+    //   // hide('sorted shows');
+    //   show('shows');
+    //   return;
+    // }
+    let term = value.trim();
+    if (isShowsVisible) {
+
+      let filteredShows = Allshows.filter((e) => {
+        return e.name.toLowerCase().includes(term.toLowerCase()) || e.summary.toLowerCase().includes(term.toLowerCase())
+      })
+      setSearchedShows(searchedShows = filteredShows);
+      show('searched shows');
+      return;
+    }
+
+
+
+  }
+
+  const chooseWhichShows = () => {
+    if (showSortdShow) { return sortedAllshows }
+    else if (showSearchedShows) { return searchedShows }
+    return Allshows;
+    //showSortdShow ? searchedShows.length > 0 ? searchedShows : sortedAllshows : Allshows
+  }
+
+  const chooseWhichEpisodes = () => {
+    if (showSortedEpis) { return sortedEpisodes }
+    else if (showSearchedEpisodes) { return searchedEpisodes }
+    return episodes;
+    // showSortedEpis ? sortedEpisodes : episodes
+  }
+
 
   const backToAllShows = () => {
     hide('episodes');
@@ -129,7 +175,7 @@ function App() {
       <h1 className="main-title"> TV Shows React Hooks </h1>
       {Allshows.length > 0 &&
         <TopSection
-          allShows={showSortdShow ? sortedAllshows : Allshows}
+          allShows={chooseWhichShows()}
           selectedShow={selectedShow}
           showSelectedShowEpisodes={showSelectedShowEpisodes}
           isShowsVisible={isShowsVisible}
@@ -140,21 +186,22 @@ function App() {
           chooseCompare={chooseCompare}
           doingDiffSort={doingDiffSort}
           backToAllShows={backToAllShows}
-          episodes={showSortedEpis ? sortedEpisodes : episodes}
+          episodes={chooseWhichEpisodes()}
           selectSingleEpisode={selectSingleEpisode}
           singleEpisode={singleEpisode}
+          doSeacrh={doSeacrh}
 
         />}
       <div className="root">
         <Main
-          AllShows={showSortdShow ? sortedAllshows : Allshows}
+          AllShows={chooseWhichShows()}
           isShowsVisible={isShowsVisible}
           isEpisodesVisble={isEpisodesVisble}
           showSingle={showSingle}
           show={show}
           hide={hide}
           selectedShow={selectedShow}
-          episodes={showSortedEpis ? sortedEpisodes : episodes}
+          episodes={chooseWhichEpisodes()}
           fetchEpisodes={fetchEpisodes}
           showSelectedShowEpisodes={showSelectedShowEpisodes}
           singleEpisode={singleEpisode}
