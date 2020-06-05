@@ -6,7 +6,7 @@ import { doSort } from '../helpers/index'
 const TopSection = ({ allShows, showSelectedShowEpisodes,
     selectedShow, isShowsVisible, isEpisodesVisble,
     hide, show, chooseCompare, doingDiffSort, backToAllShows,
-    showSingle, episodes, singleEpisode, selectSingleEpisode }) => {
+    showSingle, episodes, singleEpisode, selectSingleEpisode, doSeacrh }) => {
 
 
     return (
@@ -36,7 +36,8 @@ const TopSection = ({ allShows, showSelectedShowEpisodes,
             <div className="search-wrapper">
 
                 {!showSingle && <> <label htmlFor="search" className="anotherSearchBarStyle"> search : </label>
-                    <input id="searchBox" name="search" /> </>}
+                    <input id="searchBox" onChange={(e) => { doSeacrh(e.target.value) }} name="search" />
+                </>}
 
                 <label className="anotherSearchBarStyle"> Current Show : </label>
                 <label id="showTitle" className="anotherStyle2"> {selectedShow.length > 0 ? selectedShow[0].name : 'All Shows'} </label>
