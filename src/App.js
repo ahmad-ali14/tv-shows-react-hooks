@@ -109,7 +109,10 @@ function App() {
     }
 
     if (isEpisodesVisble) {
-      let temp = episodes.slice();
+      let temp;
+      if (showSearchedEpisodes) { temp = searchedEpisodes.slice(); }
+      else { temp = episodes.slice(); }
+
       setSortedEpisodes(sortedEpisodes = temp.sort(doSort(compare)))
       show('sorted episodes')
     }
