@@ -9,6 +9,8 @@
 
 .main-title {
   text-align: center;
+  margin: 0 0;
+  background-color: aliceblue;
 }
 
 .third {
@@ -178,4 +180,28 @@
     align-items: center;
     text-align: center;
   }
+}
+
+.top {
+  width: 100%;
+  background-color: aliceblue;
+  padding: 2%;
+}
+
+.topColor {
+  background-color: aliceblue;
+}
+
+.selectrosStyle {
+  margin: 10px 5% 10px 5%;
+}
+
+.hrTop {
+  margin: 0 0;
+  background-color: aliceblue;
+}
+
+.floatedRight {
+  position: absolute;
+  right: 2%;
 }
