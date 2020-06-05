@@ -17,10 +17,12 @@ function App() {
   var [isEpisodesVisble, setIsEpisodesVisble] = useState(false)
   var [selectedShow, setSelectedShow] = useState([]);
   var [episodes, setEpisodes] = useState([])
+  var [sortedEpisodes, setSortedEpisodes] = useState([])
   var [singleEpisode, setSingleEpisode] = useState([])
   var [showSingle, setShowSingle] = useState(false);
   var [compare, setCompare] = useState('no-sort');
   var [showSortdShow, setShowSortdShow] = useState(false);
+  var [showSortedEpis, setShowSortedEpis] = useState(false);
 
   useEffect(() => {
     setAllShows(Allshows = [...getShows()])
@@ -42,6 +44,7 @@ function App() {
       case 'episodes': setIsEpisodesVisble(isEpisodesVisble = true); break;
       case 'single episode': setShowSingle(showSingle = true); break;
       case 'sorted shows': setShowSortdShow(showSortdShow = true); break;
+      case 'sorted episodes': setShowSortedEpis(showSortedEpis = true); break;
 
       default: break;
     }
@@ -53,6 +56,7 @@ function App() {
       case 'episodes': setIsEpisodesVisble(isEpisodesVisble = false); break;
       case 'single episode': setShowSingle(showSingle = false); break;
       case 'sorted shows': setShowSortdShow(showSortdShow = false); break;
+      case 'sorted episodes': setShowSortedEpis(showSortedEpis = false); break;
 
       default: break;
     }
@@ -85,18 +89,35 @@ function App() {
   const doingDiffSort = () => {
 
     if (compare !== 'no-sort') {
-      let temp = Allshows.slice();
-      setsortedAllShows(sortedAllshows = temp.sort(doSort(compare)))
-      show('sorted shows')
+      if (isShowsVisible) {
+        let temp = Allshows.slice();
+        setsortedAllShows(sortedAllshows = temp.sort(doSort(compare)))
+        show('sorted shows')
+      }
+    }
+
+    if (isEpisodesVisble) {
+      let temp = episodes.slice();
+      setSortedEpisodes(sortedEpisodes = temp.sort(doSort(compare)))
+      show('sorted episodes')
     }
 
     if (compare === 'no-sort') {
-      hide('sorted shows');
-      // setsortedAllShows(sortedAllshows = Allshows)
-      return;
+      if (isShowsVisible) {
+        hide('sorted shows');
+      }
+      if (isEpisodesVisble) {
+        hide('sorted episodes')
+      }
+
     }
 
   }
+
+
+
+
+
   const backToAllShows = () => {
     hide('episodes');
     hide('single episode')
@@ -130,7 +151,7 @@ function App() {
           show={show}
           hide={hide}
           selectedShow={selectedShow}
-          episodes={episodes}
+          episodes={showSortedEpis ? sortedEpisodes : episodes}
           fetchEpisodes={fetchEpisodes}
           showSelectedShowEpisodes={showSelectedShowEpisodes}
           singleEpisode={singleEpisode}
