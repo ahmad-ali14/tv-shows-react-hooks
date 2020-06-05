@@ -6,7 +6,7 @@ import { makeTitle, extractPhoto } from './helpers/index'
 const Main = ({ AllShows, isShowsVisible, selectedShow,
     episodes, fetchEpisodes, showSelectedShowEpisodes,
     isEpisodesVisble, singleEpisode, showSingle,
-    setShowSingle, show, hide, selectSingleEpisode }) => {
+    setShowSingle, show, hide, selectSingleEpisode, backToAllEpisodes }) => {
 
 
 
@@ -17,6 +17,7 @@ const Main = ({ AllShows, isShowsVisible, selectedShow,
                 epi={singleEpisode}
                 hide={hide}
                 show={show}
+                backToAllEpisodes={backToAllEpisodes}
             /> : ''}
 
             {isEpisodesVisble ?
@@ -130,7 +131,7 @@ const EpiSingliton = ({ epi, makeTitle, show, hide, isEpisodesVisible,
 }
 
 
-const SingleEpisodeSingiliton = ({ epi, sshow, hide, show }) => {
+const SingleEpisodeSingiliton = ({ epi, sshow, hide, show, backToAllEpisodes }) => {
     let ss = sshow[0]
     let ep = epi[0];
 
@@ -151,7 +152,7 @@ const SingleEpisodeSingiliton = ({ epi, sshow, hide, show }) => {
 
                 <a href={ep.url}> <button className="btn-show" onClick={() => { }}> Show on TV mase </button> </a>
 
-                <button className="btn-show" onClick={() => { hide('single episode'); show('episodes') }}> Back To Episodes </button>
+                <button className="btn-show" onClick={() => { backToAllEpisodes() }}> Back To Episodes </button>
 
                 <hr style={{ marginTop: '15px', marginBottom: '15px' }} />
                 <img width="100%" src={ep.image ? ep.image.medium ? ep.image.medium : ep.image.original ? ep.image.original : `${process.env.PUBLIC_URL}/no-image-found-360x260.png` : `${process.env.PUBLIC_URL}/no-image-found-360x260.png`} alt={makeTitle(ep)} />

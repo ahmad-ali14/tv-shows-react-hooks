@@ -184,6 +184,14 @@ function App() {
     showSelectedShowEpisodes('All Shows');
   }
 
+  const backToAllEpisodes = () => {
+    show('episodes');
+    hide('single episode')
+    hide('shows')
+    selectSingleEpisode('All Episodes');
+    hide('searched episodes')
+  }
+
 
   return (
     <>
@@ -222,6 +230,7 @@ function App() {
           singleEpisode={singleEpisode}
           selectSingleEpisode={selectSingleEpisode}
           setShowSingle={setShowSingle}
+          backToAllEpisodes={backToAllEpisodes}
 
         />
 
