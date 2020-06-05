@@ -157,3 +157,25 @@
   /* /white-space: nowrap; */
 
 }
+
+@media (max-width: 800px) {
+  .third {
+    width: 43%;
+    border: 1px solid #eee;
+    padding: 2%;
+    margin: 1%;
+    align-items: center;
+    text-align: center;
+  }
+}
+
+@media (max-width: 600px) {
+  .third {
+    width: 100%;
+    border: 1px solid #eee;
+    padding: 2%;
+    margin: 1%;
+    align-items: center;
+    text-align: center;
+  }
+}
