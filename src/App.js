@@ -172,6 +172,7 @@ function App() {
 
 
   const backToAllShows = () => {
+    show('shows')
     hide('episodes');
     hide('single episode')
     hide('searched episodes')
