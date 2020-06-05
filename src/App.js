@@ -175,6 +175,8 @@ function App() {
     hide('episodes');
     hide('single episode')
     hide('searched episodes')
+    hide('sorted shows')
+    hide('searched shows')
     show('shows')
     showSelectedShowEpisodes('All Shows');
   }
