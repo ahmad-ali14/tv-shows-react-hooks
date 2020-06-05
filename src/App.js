@@ -127,7 +127,8 @@ function App() {
     <>
       <h1 className="main-title"> TV Shows React Hooks </h1>
       {Allshows.length > 0 &&
-        <TopSection allShows={Allshows}
+        <TopSection
+          allShows={showSortdShow ? sortedAllshows : Allshows}
           selectedShow={selectedShow}
           showSelectedShowEpisodes={showSelectedShowEpisodes}
           isShowsVisible={isShowsVisible}
@@ -138,6 +139,10 @@ function App() {
           chooseCompare={chooseCompare}
           doingDiffSort={doingDiffSort}
           backToAllShows={backToAllShows}
+          episodes={showSortedEpis ? sortedEpisodes : episodes}
+          selectSingleEpisode={selectSingleEpisode}
+          singleEpisode={singleEpisode}
+
         />}
       <div className="root">
         <Main

@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
-import ShowsDropMenu from './ShowsDropMenu'
+import ShowsDropMenu from './ShowsDropMenu';
+import EpisodesDropDown from './EpisodesDropDown';
 import { doSort } from '../helpers/index'
 
-export default ({ allShows, showSelectedShowEpisodes,
+const TopSection = ({ allShows, showSelectedShowEpisodes,
     selectedShow, isShowsVisible, isEpisodesVisble,
-    hide, show, chooseCompare, doingDiffSort, backToAllShows, showSingle }) => {
+    hide, show, chooseCompare, doingDiffSort, backToAllShows,
+    showSingle, episodes, singleEpisode, selectSingleEpisode }) => {
 
 
     return (
@@ -17,9 +19,19 @@ export default ({ allShows, showSelectedShowEpisodes,
                     selectedShow={selectedShow}
                     isShowsVisible={isShowsVisible}
                 />
-                {isEpisodesVisble && <>
+                {(!isShowsVisible) && <>
                     <label htmlFor="selectBox" className="searchBarStyle"> Select an Episode: </label>
-                    <div id="selectBox" > </div> </>}
+                    <EpisodesDropDown
+                        episodes={episodes}
+                        singleEpisode={singleEpisode}
+                        isEpisodesVisble={isEpisodesVisble}
+                        hide={hide}
+                        show={show}
+                        selectSingleEpisode={selectSingleEpisode}
+
+                    />
+
+                </>}
             </div>
             <div className="search-wrapper">
 
@@ -54,3 +66,4 @@ export default ({ allShows, showSelectedShowEpisodes,
 
 
 
+export default TopSection;
