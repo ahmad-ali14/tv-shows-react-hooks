@@ -143,6 +143,16 @@ function App() {
       return;
     }
 
+    if (isEpisodesVisble) {
+
+      let filteredEpisodes = episodes.filter((e) => {
+        return e.name.toLowerCase().includes(term.toLowerCase()) || e.summary.toLowerCase().includes(term.toLowerCase())
+      })
+      setSearchedEpisodes(searchedEpisodes = filteredEpisodes);
+      show('searched episodes');
+      return;
+    }
+
 
 
   }
