@@ -100,7 +100,9 @@ function App() {
 
     if (compare !== 'no-sort') {
       if (isShowsVisible) {
-        let temp = Allshows.slice();
+        let temp;
+        if (showSearchedShows) { temp = searchedShows.slice(); }
+        else { temp = Allshows.slice(); }
         setsortedAllShows(sortedAllshows = temp.sort(doSort(compare)))
         show('sorted shows')
       }
