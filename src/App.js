@@ -180,6 +180,7 @@ function App() {
   const backToAllShows = () => {
     hide('episodes');
     hide('single episode')
+    hide('searched episodes')
     show('shows')
     showSelectedShowEpisodes('All Shows');
   }
