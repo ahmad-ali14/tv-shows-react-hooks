@@ -136,3 +136,24 @@
   /* text-overflow: ellipsis; */
   /* /white-space: nowrap; */
 }
+
+
+.half {
+  width: 43%;
+  border: 1px solid #eee;
+  padding: 2%;
+  margin: 1%;
+  align-items: center;
+  text-align: center;
+}
+
+.fixed {
+  min-height: max-content;
+  /* height: 200px; */
+  max-height: max-content;
+  overflow: hidden;
+  border: 1px solid rgba(f, 0, 0, 0.2);
+  /* text-overflow: ellipsis; */
+  /* /white-space: nowrap; */
+
+}
