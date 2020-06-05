@@ -76,6 +76,10 @@ function App() {
     if (showId == "All Shows") { setSelectedShow(selectedShow = []); show('shows'); hide('episodes'); hide('single episode'); return; }
     fetchEpisodes(showId);
     hide('shows');
+    hide('searched episodes');
+    hide('single episode');
+    hide('sorted episodes')
+    //selectSingleEpisode('All Episodes');
     show('episodes');
     let selected = Allshows.filter((s) => { return (s.id == showId); });
     setSelectedShow(selectedShow = selected);
