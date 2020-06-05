@@ -45,6 +45,13 @@ const TopSection = ({ allShows, showSelectedShowEpisodes,
             </div>
 
             <div className="itemsNumber">
+                {(!showSingle) && <>
+                    {isShowsVisible ? "Shows Found :  " + allShows.length : "Episodes Found : " + episodes.length}
+                </>
+                }
+            </div>
+
+            <div className="itemsNumber">
 
                 {!showSingle && <> <div style={{ display: "inline" }} id="itemsNumber"></div>
                     <label id="" className="anotherSearchBarStyle"> Sort Via: </label>
