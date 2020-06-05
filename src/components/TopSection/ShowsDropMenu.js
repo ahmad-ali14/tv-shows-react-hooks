@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 
-export default ({ allShows, showSelectedShowEpisodes, selectedShow, isShowsVisible }) => {
+export default ({ allShows, showSelectedShowEpisodes, selectedShow,
+    isShowsVisible, }) => {
 
 
     const fillOptions = (allShows) => {
