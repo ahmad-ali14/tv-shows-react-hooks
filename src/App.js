@@ -4,6 +4,7 @@ import getShows from './data/shows';
 import Main from './components/Main';
 import TopSection from './components/TopSection'
 import axios from 'axios';
+import { doSort } from './components/helpers/index'
 
 
 
@@ -11,12 +12,15 @@ import axios from 'axios';
 
 function App() {
   var [Allshows, setAllShows] = useState([]);
+  var [sortedAllshows, setsortedAllShows] = useState([]);
   var [isShowsVisible, setIsShowsVisible] = useState(true)
   var [isEpisodesVisble, setIsEpisodesVisble] = useState(false)
   var [selectedShow, setSelectedShow] = useState([]);
   var [episodes, setEpisodes] = useState([])
   var [singleEpisode, setSingleEpisode] = useState([])
   var [showSingle, setShowSingle] = useState(false);
+  var [compare, setCompare] = useState('no-sort');
+  var [showSortdShow, setShowSortdShow] = useState(false);
 
   useEffect(() => {
     setAllShows(Allshows = [...getShows()])
@@ -37,6 +41,7 @@ function App() {
       case 'shows': setIsShowsVisible(isShowsVisible = true); break;
       case 'episodes': setIsEpisodesVisble(isEpisodesVisble = true); break;
       case 'single episode': setShowSingle(showSingle = true); break;
+      case 'sorted shows': setShowSortdShow(showSortdShow = true); break;
 
       default: break;
     }
@@ -47,6 +52,7 @@ function App() {
       case 'shows': setIsShowsVisible(isShowsVisible = false); break;
       case 'episodes': setIsEpisodesVisble(isEpisodesVisble = false); break;
       case 'single episode': setShowSingle(showSingle = false); break;
+      case 'sorted shows': setShowSortdShow(showSortdShow = false); break;
 
       default: break;
     }
@@ -54,7 +60,7 @@ function App() {
 
 
   const showSelectedShowEpisodes = (showId) => {
-    if (showId == "All Shows") { setSelectedShow(selectedShow = []); show('shows'); hide('episodes'); return; }
+    if (showId == "All Shows") { setSelectedShow(selectedShow = []); show('shows'); hide('episodes'); hide('single episode'); return; }
     fetchEpisodes(showId);
     hide('shows');
     show('episodes');
@@ -69,6 +75,36 @@ function App() {
     return;
   }
 
+  const chooseCompare = (value) => {
+    setCompare(compare = value);
+    return;
+  }
+
+
+
+  const doingDiffSort = () => {
+
+    if (compare !== 'no-sort') {
+      let temp = Allshows.slice();
+      setsortedAllShows(sortedAllshows = temp.sort(doSort(compare)))
+      show('sorted shows')
+    }
+
+    if (compare === 'no-sort') {
+      hide('sorted shows');
+      // setsortedAllShows(sortedAllshows = Allshows)
+      return;
+    }
+
+  }
+  const backToAllShows = () => {
+    hide('episodes');
+    hide('single episode')
+    show('shows')
+    showSelectedShowEpisodes('All Shows');
+  }
+
+
   return (
     <>
       <h1 className="main-title"> TV Shows React Hooks </h1>
@@ -81,10 +117,13 @@ function App() {
           isEpisodesVisble={isEpisodesVisble}
           hide={hide}
           show={show}
+          chooseCompare={chooseCompare}
+          doingDiffSort={doingDiffSort}
+          backToAllShows={backToAllShows}
         />}
       <div className="root">
         <Main
-          AllShows={Allshows}
+          AllShows={showSortdShow ? sortedAllshows : Allshows}
           isShowsVisible={isShowsVisible}
           isEpisodesVisble={isEpisodesVisble}
           showSingle={showSingle}

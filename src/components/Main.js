@@ -133,7 +133,6 @@ const EpiSingliton = ({ epi, makeTitle, show, hide, isEpisodesVisible,
 const SingleEpisodeSingiliton = ({ epi, sshow, hide, show }) => {
     let ss = sshow[0]
     let ep = epi[0];
-    console.log(epi[0])
 
 
     return (

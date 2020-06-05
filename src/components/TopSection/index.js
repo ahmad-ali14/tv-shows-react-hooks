@@ -1,14 +1,12 @@
 import React, { useState } from 'react'
 import ShowsDropMenu from './ShowsDropMenu'
+import { doSort } from '../helpers/index'
 
-export default ({ allShows, togleShows, showSelectedShowEpisodes, selectedShow, isShowsVisible, togleSingle, showSingle, isEpisodesVisble, togleEpisodes, hide, show }) => {
+export default ({ allShows, togleShows, showSelectedShowEpisodes,
+    selectedShow, isShowsVisible, togleSingle, showSingle, isEpisodesVisble,
+    togleEpisodes, hide, show, chooseCompare, doingDiffSort, backToAllShows }) => {
 
-    const backToAllShows = () => {
-        hide('episodes');
-        hide('single episode')
-        show('shows')
-        showSelectedShowEpisodes('All Shows');
-    }
+
     return (
         <>
             <div className="search-wrapper">
@@ -34,8 +32,8 @@ export default ({ allShows, togleShows, showSelectedShowEpisodes, selectedShow, 
             <div className="itemsNumber">
                 <div style={{ display: "inline" }} id="itemsNumber"></div>
                 <label id="" className="anotherSearchBarStyle"> Sort Via: </label>
-                <select id="sort">
-                    <option>choose sorting method</option>
+                <select id="sort" onChange={(e) => { chooseCompare(e.target.value); doingDiffSort(); }}>
+                    <option value="no-sort">choose sorting method</option>
                     <option value="no-sort" >No Sort</option>
                     <option value="name-a-z" >Name A-Z</option>
                     <option value="name-z-a">Name Z-A</option>
@@ -49,3 +47,6 @@ export default ({ allShows, togleShows, showSelectedShowEpisodes, selectedShow, 
         </>
     )
 }
+
+
+
