@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../App.css'
-import { makeTitle } from './helpers/index'
+import { makeTitle, extractPhoto } from './helpers/index'
 
 
 const Main = ({ AllShows, isShowsVisible, selectedShow,
@@ -68,7 +68,7 @@ const Singliton = ({ singleShow, showSelectedShowEpisodes }) => {
     return (
         <div className="third">
             <h4 className="epi-title" id={show.id}>  {show.name} </h4>
-            <img height="295px" width="210px" src={show.image ? show.image.medium ? show.image.medium : show.image.original ? show.image.original : `${process.env.PUBLIC_URL}/no-image-found-360x260.png` : `${process.env.PUBLIC_URL}/no-image-found-360x260.png`} alt={show.name} />
+            <img height="295px" width="210px" src={extractPhoto(show)} alt={show.name} />
             <p className="limited"
                 dangerouslySetInnerHTML={{ __html: show.summary.replace(new RegExp('<p>|</p>', 'gi'), '') }} />
 
@@ -112,7 +112,7 @@ const EpiSingliton = ({ epi, makeTitle, show, hide, isEpisodesVisible,
     return (
         <div className="third">
             <h4 className="epi-title" id={epi.id}>  {makeTitle(epi)} </h4>
-            <img height="140px" width="250px" src={epi.image ? epi.image.medium ? epi.image.medium : epi.image.original ? epi.image.original : `${process.env.PUBLIC_URL}/no-image-found-360x260.png` : `${process.env.PUBLIC_URL}/no-image-found-360x260.png`} alt={makeTitle(epi)} />
+            <img height="140px" width="250px" src={extractPhoto(epi)} alt={makeTitle(epi)} />
             {epi.summary
                 ? <p className="limited"
                     dangerouslySetInnerHTML={{ __html: epi.summary.replace(new RegExp('<p>|</p>', 'gi'), '') }} />
