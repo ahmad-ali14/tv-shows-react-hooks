@@ -74,6 +74,7 @@ function App() {
   }
 
   const selectSingleEpisode = (epiId) => {
+    if (epiId == "All Episodes") { setSingleEpisode([]); hide('shows'); show('episodes'); hide('single episode'); return; }
     let selected = episodes.filter((s) => { return (s.id == epiId); });
     setSingleEpisode(singleEpisode = selected);
     return;

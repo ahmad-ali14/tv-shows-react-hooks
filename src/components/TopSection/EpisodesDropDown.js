@@ -2,7 +2,7 @@ import React from 'react';
 import { makeTitle } from '../helpers/index';
 
 const EpisodesDropDown = ({ episodes, showSelectedShowEpisodes, singleEpisode,
-    isShowsVisible, hide, show, selectSingleEpisode }) => {
+    isEpisodesVisible, hide, show, selectSingleEpisode }) => {
 
 
     const fillOptions = (episodes) => {
@@ -13,7 +13,7 @@ const EpisodesDropDown = ({ episodes, showSelectedShowEpisodes, singleEpisode,
     return (
         <>
             <select id="showSelector" autoFocus="-1" value={singleEpisode.length > 0 ? singleEpisode[0].id : ''} onChange={(e) => { hide('episodes'); show('single episode'); selectSingleEpisode(e.target.value); }}>
-                <option id="defaultShowSelection" value="All Shows" selected={isShowsVisible ? true : false} >All Episodes </option>
+                <option id="defaultShowSelection" value="All Episodes" selected={isEpisodesVisible ? true : false} >All Episodes </option>
                 {fillOptions(episodes)}
             </select>
         </>
